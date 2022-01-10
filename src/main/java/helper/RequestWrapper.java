@@ -37,10 +37,9 @@ public class RequestWrapper {
 	 * @param headers map containing headers to be passed for an api
 	 * @return request specifications
 	 */
-	public RequestSpecification requestSpecification(Map<String, String> headers) {
+	public RequestSpecification requestSpecification() {
 
-		if (headers == null)
-			headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", "application/json");
 		headers.put("content-type", "application/json");
 		PrintStream logStream = IoBuilder.forLogger(log).buildPrintStream();
@@ -66,11 +65,9 @@ public class RequestWrapper {
 	 * @param queryParams map of query params
 	 * @return api response
 	 */
-	public Response getRequestWithQueryParams(String endpoint, Map<String, String> headers,
-			Map<String, String> queryParams) {
+	public Response getRequestWithQueryParams(String endpoint, Map<String, String> queryParams) {
 		log.info("Performing GET on end point : " + endpoint);
-		Response resp = RestAssured.given().spec(requestSpecification(headers)).queryParams(queryParams).when()
-				.get(endpoint);
+		Response resp = RestAssured.given().spec(requestSpecification()).queryParams(queryParams).when().get(endpoint);
 		log.debug("Response: " + resp.asString());
 		return resp;
 

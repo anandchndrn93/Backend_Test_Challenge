@@ -37,7 +37,7 @@ public class Requests {
 		endpoint = EndPoints.valueOf("users");
 		Map<String, String> userDetails = new HashMap<>();
 		userDetails.put("username", strUserName);
-		return req.getRequestWithQueryParams(endpoint.getResource(), null, userDetails);
+		return req.getRequestWithQueryParams(endpoint.getResource(), userDetails);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class Requests {
 		endpoint = EndPoints.valueOf("posts");
 		Map<String, String> postDetails = new HashMap<>();
 		postDetails.put("userId", strUserID);
-		return req.getRequestWithQueryParams(endpoint.getResource(), null, postDetails);
+		return req.getRequestWithQueryParams(endpoint.getResource(), postDetails);
 
 	}
 
@@ -62,12 +62,11 @@ public class Requests {
 	 * @param strPostID id of the post where comments are to be searched
 	 * @return api response
 	 */
-	public Response getComments(String strPostID) {
+	public Response getComments(int  intPostID) {
 		endpoint = EndPoints.valueOf("comments");
 		Map<String, String> commentDetails = new HashMap<>();
-		commentDetails.put("postId", strPostID);
-		return req.getRequestWithQueryParams(endpoint.getResource(), null, commentDetails);
-
+		commentDetails.put("postId", Integer.toString(intPostID));
+		return req.getRequestWithQueryParams(endpoint.getResource(), commentDetails);
 	}
 
 }
