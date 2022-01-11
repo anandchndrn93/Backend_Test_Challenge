@@ -22,13 +22,13 @@ import requests.Requests;
  * @author Anand Chandran
  */
 
-public class tests {
+public class Tests {
 	private Requests request;
 	SoftAssert softAssertion = new SoftAssert();
 	/**
 	 * Logger object to add logs
 	 */
-	private static Logger log = LogManager.getLogger(tests.class.getName());
+	private static Logger log = LogManager.getLogger(Tests.class.getName());
 
 	/**
 	 * Method to run before a test. initialize instance of PetModule class
