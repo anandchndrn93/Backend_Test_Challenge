@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ public class Utilities {
 	/**
 	 * Logger object to add all logs
 	 */
-	private static  Logger log = LogManager.getLogger(Utilities.class.getName());
+	private static Logger log = LogManager.getLogger(Utilities.class.getName());
 
 	/**
 	 * Reads all the values from properties file
@@ -69,5 +70,15 @@ public class Utilities {
 			}
 		}
 		return new HashMap(prop);
+	}
+
+	public static boolean isValidEmail(String email) {
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+				+ "A-Z]{2,7}$";
+
+		Pattern pat = Pattern.compile(emailRegex);
+		if (email == null)
+			return false;
+		return pat.matcher(email).matches();
 	}
 }
