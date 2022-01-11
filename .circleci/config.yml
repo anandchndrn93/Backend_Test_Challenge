@@ -1,0 +1,25 @@
+
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+jobs:
+  #  the definition of job to build and test.
+  build-and-test:
+    
+    docker:
+      - image: cimg/openjdk:11.0
+    # Add steps to the job
+    
+    steps:
+      # Checkout the code as the first step.
+      - checkout
+      # Run tests!
+      - run:
+          name: Test
+          command: mvn test
+
+# Invoke jobs via workflows
+workflows:
+  backend-test-challenge: 
+    jobs:
+      - build-and-test
