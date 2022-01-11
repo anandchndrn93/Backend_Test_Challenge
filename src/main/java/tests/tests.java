@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import helper.Utilities;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import requests.Requests;
 
@@ -40,17 +41,17 @@ public class tests {
 	/**
 	 * test for validating work flow
 	 */
-	@Test()
+	@Test
 	public void commentEmailsTest() {
 		Response userResponse = request.getUserDetails(getBundle().get("USER_NAME"));
-		
+
 		// verifying the status code for user details response
 		softAssertion.assertEquals(userResponse.getStatusCode(), 200, "response code does not match expected");
 		log.debug("user details for " + getBundle().get("USER_NAME") + " fetched successfully");
 		String userId = userResponse.jsonPath().getList("id").get(0).toString();
 
 		Response postResponse = request.getPosts(userId);
-		
+
 		// verifying the status code for post details response
 		softAssertion.assertEquals(postResponse.getStatusCode(), 200, "response code does not match expected");
 		log.debug("All post details by user " + getBundle().get("USER_NAME") + " fetched successfully");
@@ -59,7 +60,7 @@ public class tests {
 
 		for (int postId : postIds) {
 			Response commentResponse = request.getComments(postId);
-			
+
 			// verifying the status code for comments details response
 			softAssertion.assertEquals(commentResponse.getStatusCode(), 200, "response code does not match expected");
 			log.debug("comment details for post with id " + postId + " fetched successfully");
@@ -67,7 +68,7 @@ public class tests {
 			commentEmails.addAll(commentResponse.path("email"));
 
 			for (String email : commentEmails) {
-				
+
 				// verifying the email formats
 				softAssertion.assertTrue(Utilities.isValidEmail(email),
 						"The email " + email + " is not in right format");
@@ -78,5 +79,14 @@ public class tests {
 
 		softAssertion.assertAll();
 
+	}
+	/**
+	 * test for validating user details api response schema
+	 */
+	@Test
+	public void validateUserDetailsAPISchema() {
+		Response userResponse = request.getUserDetails(getBundle().get("USER_NAME"));
+		userResponse.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("userdetails.json"));
+		log.debug("The response Json Schema is valid");
 	}
 }
