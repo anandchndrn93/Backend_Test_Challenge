@@ -4,7 +4,7 @@
 1. java 11.0.11
 2. Apache Maven 3.8.1
 3. TestNG 7.0.0
-Logging using Apache Log4j. Sample file in **/logs/**
+Logging using Apache Log4j.
 
 ## CI Integration
 CI integrations is done using CircleCI and has added github checkes. Every time a pull request is raised or code is merged to master the tests will be triggered
